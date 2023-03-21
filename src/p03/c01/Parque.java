@@ -3,12 +3,34 @@ package src.p03.c01;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * Clase Parque - Implementa un parque en el que se tiene un aforo máximo dado por AFOROMAX y un aforo mínimo dado por AFOROMIN.
+ * 
+ * Se controlan las entradas y salidas del parque por cada una de las puertas y se obtiene el tiempo medio de estancia. 
+ * Cada puerta de entrada y salida se simula de forma concurrente con varios hilos. Cada hilo se corresponde con una puerta de entrada o salida.
+ * 
+ * @author Irati Arraiza Urquiola - Eduardo Manuel Cabeza Lopez
+ * @version 1.0
+ * @since 1.0
+ * @see IParque
+ *
+ */
 public class Parque implements IParque{
 
 
-	// TODO 
+	/**
+	 * Cantidad de personas actuales en el parque.
+	 */ 
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
+	/**
+	 * Aforo máximo del parque.
+	 */
+	private final int AFOROMAX = 50; 
+	/**
+	 * Cantidad mínima de personas en el parque. 
+	 */
+	private final int AFOROMIN = 0; 
 	
 	
 	public Parque() {
@@ -67,25 +89,52 @@ public class Parque implements IParque{
 		return sumaContadoresPuerta;
 	}
 	
+	/**
+	 * Método chechInvariante - Comprueba los invariantes del objeto.
+	 * 
+	 * Comprueba los invariantes del objeto de clase Parque mediante aserciones.
+	 * 
+	 */
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		// TODO 
-		// TODO
-		
-		
-		
+		assert contadorPersonasTotales >= AFOROMIN
+				: "INV: La suma de los contadores de las puertas no puede ser menor que cero.";
+		assert contadorPersonasTotales <= AFOROMAX
+				: "INV: La suma de los contadores de las puertas no puede ser mayor que el aforo máximo del parque.";	
 	}
 
+	/**
+	 * Método comprobarAntesDeEntrar - Mantiene al hilo en espera mientras la condición de entrada no se cumpla.
+	 *
+	 */
 	protected void comprobarAntesDeEntrar(){
-		//
-		// TODO
-		//
+		//Bucle while que se repite mientras la condición de entrada no se cumpla.
+		while (!(contadorPersonasTotales < AFOROMAX)) {
+			//Bloque try que intenta ejecutar
+			try {
+				wait(); //Mantiene al hilo dormido hasta recibir una notificación que lo despierte
+			// Captura y trata la excepción InterruptedException
+			} catch (InterruptedException e) {
+				System.out.println("Hilo interrumpido"); // Mensaje mostrado en caso de que el hilo sea interrumpido.
+			}
+		}
 	}
 
+	/**
+	 * Método comprobarAntesDeSalir - Mantiene al hilo en espera mientras la condición de salida no se cumpla.
+	 * 
+	 */
 	protected void comprobarAntesDeSalir(){
-		//
-		// TODO
-		//
+		//Bucle while que se repite mientras la condición de salida no se cumpla.
+		while (!(contadorPersonasTotales > AFOROMIN)) {
+			//Bloque try que intenta ejecutar
+			try {
+				wait(); //Mantiene al hilo dormido hasta recibir una notificación que lo despierte
+			// Captura y trata la excepción InterruptedException
+			} catch (InterruptedException e) {
+				System.out.println("Hilo interrumpido"); // Mensaje mostrado en caso de que el hilo sea interrumpido.
+			}
+		}
 	}
 
 
