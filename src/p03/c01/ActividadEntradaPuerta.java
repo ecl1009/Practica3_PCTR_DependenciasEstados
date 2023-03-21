@@ -28,7 +28,7 @@ public class ActividadEntradaPuerta implements Runnable {
 	private String puerta;
 	
 	/**
-	 * PArque al que pertenece la puerta
+	 * Parque al que pertenece la puerta
 	 */
 	private IParque parque;
 	
@@ -48,10 +48,7 @@ public class ActividadEntradaPuerta implements Runnable {
 	/**
 	 * Método run - Método que ejecuta el hilo al ser creado. 
 	 * Simula NUMENTRADAS entradas al parque.
-	 */
-	/*
-	 * @exception InterruptedException Cuando el hilo ha sido interrumpido. 
-	 */
+	 */	
 	@Override
 	public void run() {
 		// Se ejecuta el bucle hasta alcanzar el número máximo de entradas establecido en NUMENTRADAS
