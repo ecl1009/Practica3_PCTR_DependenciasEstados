@@ -38,18 +38,25 @@ public class Parque implements IParque{
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
 	}
 
-
+	/**
+	 * Método sincronizado entrarAlParque - Simula una entrada por una puerta del parque. 
+	 * 
+	 * Se comprueban las precondiciones antes de entrar al parque, se actualizan los valores
+	 * y se notifica a todos los hilos. 
+	 * 
+	 * @param puerta String con el nombre de la puerta por la que se entra al parque.
+	 */
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public void entrarAlParque(String puerta){		
+		
+		// Comprobar precondiciones
+		comprobarAntesDeEntrar();
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-		
-		// TODO
-				
-		
+			
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
@@ -57,16 +64,45 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
+		// Se notifica a todos los hilos.
+				notifyAll();
 		
-		
-		// TODO
-		
+		// Se comprueba el invariante. 
+		checkInvariante();
 	}
 	
-	// 
-	// TODO Método salirDelParque
-	//
+	/**
+	 * Método sincronizado salirDelParque - Simula una salida por una puerta del parque. 
+	 * 
+	 * Se comprueban las precondiciones antes de salir del parque, se actualizan los valores
+	 * y se notifica a todos los hilos. 
+	 * 
+	 * @param puerta String con el nombre de la puerta por la que se sale del parque.
+	 */ 
+	@Override
+	public synchronized void salirDelParque(String puerta) {
+		// Comprobar precondiciones
+		comprobarAntesDeSalir();
+		
+		// Si no hay salidas por esa puerta, inicializamos
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
+				
+		
+		// Aumentamos el contador total y el individual
+		contadorPersonasTotales--;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+		
+		// Imprimimos el estado del parque.
+		imprimirInfo(puerta, "Salida");
+		
+		// Se notifica a todos los hilos.
+		notifyAll();
+		
+		// Se comprueba el invariante. 
+		checkInvariante();
+	}
 	
 	
 	private void imprimirInfo (String puerta, String movimiento){
