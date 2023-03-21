@@ -255,9 +255,7 @@ public class Parque implements IParque {
 		// Iteramos por todas las puertas e imprimimos sus entradas
 		for (String p : contadoresPersonasPuerta.keySet()) {
 			System.out.println("---->   " + p + "\t\t" + entradasPuertas.get(p) + "\t\t" + salidasPuertas.get(p) + "\t   " + contadoresPersonasPuerta.get(p));
-			//System.out.println("----> " + p + " entradas: " + entradasPuertas.get(p) + ", salidas: "
-					//+ salidasPuertas.get(p));
-		}
+			}
 		System.out.println(" ");
 	}
 
@@ -297,11 +295,7 @@ public class Parque implements IParque {
 
 	/**
 	 * Método comprobarAntesDeEntrar - Mantiene al hilo en espera mientras la condición de entrada no se cumpla.
-	 */
-	/*
-	 * @exception InterruptedException Cuando el hilo es interrumpido.
-	 */
-	 
+	 */	 
 	protected void comprobarAntesDeEntrar() {
 		//Bucle while que se repite mientras la condición de entrada no se cumpla.
 		while (!condicionEntrada()) {
@@ -318,9 +312,6 @@ public class Parque implements IParque {
 	/**
 	 * Método comprobarAntesDeSalir - Mantiene al hilo en espera mientras la condición de salida no se cumpla.
 	 * 
-	 */
-	 /*
-	 * @exception InterruptedException Cuando el hilo es interrumpido.
 	 */
 	protected void comprobarAntesDeSalir() {
 		
