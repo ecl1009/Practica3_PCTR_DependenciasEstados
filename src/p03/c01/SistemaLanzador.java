@@ -14,6 +14,11 @@ package src.p03.c01;
 public class SistemaLanzador {
 
 	/**
+	 * Constructor por defecto.
+	 */
+	public SistemaLanzador() {};
+	
+	/**
 	 * Método principal main - Lanza 10 Threads, 5 de entrada y 5 de salida del
 	 * parque.
 	 * 
